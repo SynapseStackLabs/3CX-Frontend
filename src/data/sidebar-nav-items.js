@@ -1,23 +1,23 @@
 export default function() {
   return [
     {
-      title: "Blog Dashboard",
+      title: "Report Dashboard",
       to: "/blog-overview",
       htmlBefore: '<i class="material-icons">edit</i>',
       htmlAfter: ""
     },
     {
-      title: "Blog Posts",
+      title: "Users",
       htmlBefore: '<i class="material-icons">vertical_split</i>',
       to: "/blog-posts",
     },
     {
-      title: "Add New Post",
+      title: "Organisations",
       htmlBefore: '<i class="material-icons">note_add</i>',
       to: "/add-new-post",
     },
     {
-      title: "Forms & Components",
+      title: "Contents",
       htmlBefore: '<i class="material-icons">view_module</i>',
       to: "/components-overview",
     },
