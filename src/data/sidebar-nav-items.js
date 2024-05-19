@@ -9,32 +9,47 @@ export default function() {
     {
       title: "Users",
       htmlBefore: '<i class="material-icons">vertical_split</i>',
-      to: "/blog-posts",
+      to: "/users",
     },
     {
       title: "Organisations",
-      htmlBefore: '<i class="material-icons">note_add</i>',
-      to: "/add-new-post",
+      htmlBefore: '<i class="material-icons">vertical_split</i>',
+      to: "/organisations",
     },
     {
-      title: "Contents",
-      htmlBefore: '<i class="material-icons">view_module</i>',
-      to: "/components-overview",
+      title: "Events",
+      htmlBefore: '<i class="material-icons">vertical_split</i>',
+      to: "/events",
     },
     {
-      title: "Tables",
-      htmlBefore: '<i class="material-icons">table_chart</i>',
-      to: "/tables",
+      title: "Users",
+      htmlBefore: '<i class="material-icons">vertical_split</i>',
+      to: "/blog-posts",
     },
-    {
-      title: "User Profile",
-      htmlBefore: '<i class="material-icons">person</i>',
-      to: "/user-profile-lite",
-    },
-    {
-      title: "Errors",
-      htmlBefore: '<i class="material-icons">error</i>',
-      to: "/errors",
-    }
+    // {
+    //   title: "Organisations",
+    //   htmlBefore: '<i class="material-icons">note_add</i>',
+    //   to: "/add-new-post",
+    // },
+    // {
+    //   title: "Contents",
+    //   htmlBefore: '<i class="material-icons">view_module</i>',
+    //   to: "/components-overview",
+    // },
+    // {
+    //   title: "Tables",
+    //   htmlBefore: '<i class="material-icons">table_chart</i>',
+    //   to: "/tables",
+    // },
+    // {
+    //   title: "User Profile",
+    //   htmlBefore: '<i class="material-icons">person</i>',
+    //   to: "/user-profile-lite",
+    // },
+    // {
+    //   title: "Errors",
+    //   htmlBefore: '<i class="material-icons">error</i>',
+    //   to: "/errors",
+    // }
   ];
 }

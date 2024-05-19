@@ -5,6 +5,27 @@ export const USER_DASHBOARD_QUERY = gql`
     GetUsers {
       first_name
       last_name
+      createdRecommendations {
+        id
+      }
+      created
+    }
+  }
+`;
+
+export const USERS_QUERY = gql`
+  query UsersQuery {
+    GetUsers {
+      first_name
+      last_name
+      gender
+      email
+      country
+      state
+      city
+      createdRecommendations {
+        id
+      }
       created
       country
     }
@@ -16,6 +37,28 @@ export const ORGANISATION_DASHBOARD_QUERY = gql`
     GetOrganisations {
       id
       state
+      industry
+      description
+      name
+      User {
+        id
+      }
+      created
+    }
+  }
+`;
+
+export const ORGANISATIONS_QUERY = gql`
+  query OrganisationDashboardQuery {
+    GetOrganisations {
+      city
+      country
+      description
+      industry
+      name
+      User {
+        id
+      }
     }
   }
 `;

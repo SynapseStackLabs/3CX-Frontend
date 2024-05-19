@@ -10,13 +10,14 @@ class UsersOverview extends React.Component {
     super(props);
 
     this.canvasRef = React.createRef();
+    this.createdChart = false;
   }
 
-  getUserCountsByMonth(userData) {
-    const userCountsByMonth = new Array(12).fill(0);
+  getUserCountsByMonth(chartData) {
+    const userCountsByMonth = new Array(14).fill(0);
 
     // Iterate over each user data object
-    userData.forEach((user) => {
+    chartData.forEach((user) => {
       // Parse the created date string into a JavaScript Date object
       const createdDate = new Date(user.created);
 
@@ -24,14 +25,14 @@ class UsersOverview extends React.Component {
       const month = createdDate.getMonth(); // Month is zero-based
 
       // Increment the user count for the corresponding month
-      userCountsByMonth[month - 1]++;
+      userCountsByMonth[month + 1]++;
     });
 
     return userCountsByMonth;
   }
 
   componentDidUpdate() {
-    if (this.props.userData) {
+    if (this.props.chartData) {
       const chartOptions = {
         ...{
           responsive: true,
@@ -87,26 +88,29 @@ class UsersOverview extends React.Component {
         ...this.props.chartOptions,
       };
 
-      let chartData = defaultChartData;
-      if (this.props.userData) {
+      let chartData = JSON.parse(JSON.stringify(defaultChartData));
+      if (this.props.chartData) {
         chartData.datasets[0].data = this.getUserCountsByMonth(
-          this.props.userData
+          this.props.chartData
         );
       }
 
-      const BlogUsersOverview = new Chart(this.canvasRef.current, {
-        type: "LineWithLine",
-        data: chartData,
-        options: chartOptions,
-      });
+      if (!this.createdChart) {
+        this.BlogUsersOverview = new Chart(this.canvasRef.current, {
+          type: "LineWithLine",
+          data: chartData,
+          options: chartOptions,
+        });
+      }
 
       // They can still be triggered on hover.
-      const buoMeta = BlogUsersOverview.getDatasetMeta(0);
+      const buoMeta = this.BlogUsersOverview.getDatasetMeta(0);
       buoMeta.data[0]._model.radius = 0;
       buoMeta.data[chartData.datasets[0].data.length - 1]._model.radius = 0;
 
       // Render the chart.
-      BlogUsersOverview.render();
+      this.BlogUsersOverview.render();
+      this.createdChart = true;
     }
   }
 

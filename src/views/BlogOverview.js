@@ -5,9 +5,7 @@ import { Container, Row, Col, Card, CardBody } from "shards-react";
 import PageTitle from "../components/common/PageTitle";
 import SmallStats from "../components/common/SmallStats";
 import UsersOverview from "../components/blog/UsersOverview";
-import UsersByDevice from "../components/blog/UsersByDevice";
-import NewDraft from "../components/blog/NewDraft";
-import Discussions from "../components/blog/Discussions";
+import Organisations from "../components/blog/Organisations";
 import TopReferrals from "../components/common/TopReferrals";
 import { useQuery } from "@apollo/client";
 import {
@@ -121,48 +119,44 @@ const countryCodes = getCountries().reduce((obj, item) => {
 }, {});
 
 function ParseUserData(title, value, defaultIdx) {
-  const stat = defaultStats[defaultIdx];
+  const stat = JSON.parse(JSON.stringify(defaultStats[defaultIdx]));
   stat["value"] = value;
   stat["label"] = title;
   return stat;
 }
 
+function ParseRecommendorData(userData) {
+  return {
+    title: `${userData.first_name} ${userData.last_name}`,
+    value: userData.createdRecommendations.length,
+  };
+}
+
 function BlogOverview() {
-  const { loading: userLoading, data: userData } = useQuery(
-    USER_DASHBOARD_QUERY,
-    {
-      variables: {},
-      pollInterval: 10000,
-    }
-  );
+  const { data: userData } = useQuery(USER_DASHBOARD_QUERY, {
+    variables: {},
+    pollInterval: 10000,
+  });
 
-  const { loading: organisationLoading, data: organisationData } = useQuery(
-    ORGANISATION_DASHBOARD_QUERY,
-    {
-      variables: {},
-      pollInterval: 10000,
-    }
-  );
+  const { data: organisationData } = useQuery(ORGANISATION_DASHBOARD_QUERY, {
+    variables: {},
+    pollInterval: 10000,
+  });
 
-  const { loading: eventLoading, data: eventData } = useQuery(
-    EVENT_DASHBOARD_QUERY,
-    {
-      variables: {},
-      pollInterval: 10000,
-    }
-  );
+  const { data: eventData } = useQuery(EVENT_DASHBOARD_QUERY, {
+    variables: {},
+    pollInterval: 10000,
+  });
 
-  const { loading: contentLoading, data: contentData } = useQuery(
-    CONTENT_DASHBOARD_QUERY,
-    {
-      variables: {},
-      pollInterval: 10000,
-    }
-  );
+  const { data: contentData } = useQuery(CONTENT_DASHBOARD_QUERY, {
+    variables: {},
+    pollInterval: 10000,
+  });
 
   const [smallStats, setStats] = useState([]);
   const [countryUsers, setCountryUsers] = useState([]);
   const [events, setEvents] = useState([]);
+  const [recommendorData, setRecommendors] = useState([]);
 
   const setStatData = () => {
     let stats = [];
@@ -230,12 +224,27 @@ function BlogOverview() {
     }
     return [];
   };
+  function setRecommendorData() {
+    let result = [];
+    if (userData?.GetUsers) {
+      let users = [...userData?.GetUsers];
+      users = users.sort(
+        (a, b) =>
+          b.createdRecommendations.length - a.createdRecommendations.length
+      );
+      for (let i = 0; i < 10; i++) {
+        result.push(ParseRecommendorData(users[i]));
+      }
+    }
+    return result;
+  }
 
   useEffect(() => {
-    setStats(setStatData);
+    setStats(setStatData());
   }, [userData, organisationData, contentData, eventData]);
 
   useEffect(() => {
+    setRecommendors(setRecommendorData());
     setCountryUsers(setCountryUsersData);
   }, [userData]);
 
@@ -286,26 +295,28 @@ function BlogOverview() {
         </Row>
         <Row>
           {/* Users Overview */}
-          <Col lg="8" md="12" sm="12" className="mb-4">
-            <UsersOverview userData={userData?.GetUsers} />
+          <Col lg="6" md="12" sm="12" className="mb-4">
+            <UsersOverview title="Users" chartData={userData?.GetUsers} />
           </Col>
 
-          {/* Users by Device */}
-          <Col lg="4" md="6" sm="12" className="mb-4">
-            <UsersByDevice />
+          {/* Users Overview */}
+          <Col lg="6" md="12" sm="12" className="mb-4">
+            <UsersOverview
+              title="Organisations"
+              chartData={organisationData?.GetOrganisations}
+            />
           </Col>
 
           {/* Discussions */}
-          <Col lg="5" md="12" sm="12" className="mb-4">
-            <Discussions />
+          <Col lg="6" md="12" sm="12" className="mb-4">
+            <Organisations organisations={organisationData?.GetOrganisations} />
           </Col>
 
           {/* Top Referrals */}
-          <Col lg="3" md="12" sm="12" className="mb-4">
-            <TopReferrals />
+          <Col lg="6" md="12" sm="12" className="mb-4">
+            <TopReferrals referralData={recommendorData} />
           </Col>
         </Row>
-
       </Container>
     </>
   );

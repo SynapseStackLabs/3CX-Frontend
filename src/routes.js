@@ -11,7 +11,10 @@ import AddNewPost from "./views/AddNewPost";
 import Errors from "./views/Errors";
 import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
+import Users from "./views/Users";
+import Events from "./views/Events";
 import BlogPosts from "./views/BlogPosts";
+import Organisations from "./views/Organisations";
 
 export default [
   {
@@ -44,6 +47,21 @@ export default [
     path: "/components-overview",
     layout: DefaultLayout,
     component: ComponentsOverview
+  },
+  {
+    path: "/users",
+    layout: DefaultLayout,
+    component: Users
+  },
+  {
+    path: "/organisations",
+    layout: DefaultLayout,
+    component: Organisations
+  },
+  {
+    path: "/events",
+    layout: DefaultLayout,
+    component: Events
   },
   {
     path: "/tables",
