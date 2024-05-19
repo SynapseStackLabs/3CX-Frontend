@@ -136,7 +136,7 @@ class UsersOverview extends React.Component {
             </Col>
           </Row>
           <canvas
-            height="120"
+            height="300"
             ref={this.canvasRef}
             style={{ maxWidth: "100% !important" }}
           />

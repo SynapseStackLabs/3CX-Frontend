@@ -39,28 +39,24 @@ MainFooter.propTypes = {
 
 MainFooter.defaultProps = {
   contained: false,
-  copyright: "Copyright © 2018 DesignRevision",
+  copyright: "Copyright © 2024 3CX",
   menuItems: [
     {
       title: "Home",
       to: "#"
     },
     {
-      title: "Services",
+      title: "Users",
       to: "#"
     },
     {
-      title: "About",
+      title: "Organisations",
       to: "#"
     },
     {
-      title: "Products",
+      title: "Events",
       to: "#"
     },
-    {
-      title: "Blog",
-      to: "#"
-    }
   ]
 };
 

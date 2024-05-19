@@ -1,0 +1,15 @@
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distributes space between elements */
+    height: 100%; /* Ensures the card body takes up the full height */
+  }
+  
+  .top-content {
+    /* Additional styling if needed */
+  }
+  
+  .bottom-span {
+    align-self: flex-start
+  }
+  

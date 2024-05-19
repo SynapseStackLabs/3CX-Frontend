@@ -13,19 +13,19 @@ export default function() {
     },
     {
       title: "Organisations",
-      htmlBefore: '<i class="material-icons">vertical_split</i>',
+      htmlBefore: '<i class="material-icons">note_add</i>',
       to: "/organisations",
     },
     {
       title: "Events",
-      htmlBefore: '<i class="material-icons">vertical_split</i>',
+      htmlBefore: '<i class="material-icons">view_module</i>',
       to: "/events",
     },
-    {
-      title: "Users",
-      htmlBefore: '<i class="material-icons">vertical_split</i>',
-      to: "/blog-posts",
-    },
+    // {
+    //   title: "Users",
+    //   htmlBefore: '<i class="material-icons">vertical_split</i>',
+    //   to: "/blog-posts",
+    // },
     // {
     //   title: "Organisations",
     //   htmlBefore: '<i class="material-icons">note_add</i>',

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { EVENTS_QUERY } from "../utils/api/graphql/queries";
 import { useQuery } from "@apollo/client";
+import "../App.css";
 import {
   Container,
   Row,
@@ -24,7 +25,7 @@ const defaultEventData = {
   date: "29 February 2019",
 };
 
-function truncateText(text, maxLength = 100) {
+function truncateText(text, maxLength = 150) {
   if (!text) return;
   if (text.length > maxLength) {
     return text.slice(0, maxLength) + "...";
@@ -111,7 +112,7 @@ function Events() {
                 <div className="top-content">
                   <h5 className="card-title">
                     <a className="text-fiord-blue" href="#">
-                      {post.title}
+                      {truncateText(post.title, 30)}
                     </a>
                   </h5>
                   <p className="card-text d-inline-block mb-3">
