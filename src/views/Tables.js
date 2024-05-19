@@ -5,9 +5,6 @@ import PropTypes from "prop-types";
 import PageTitle from "../components/common/PageTitle";
 
 function Tables({ title, tableData }) {
-  useEffect(() => {
-    console.log(tableData);
-  }, [tableData]);
   return (
     <Container fluid className="main-content-container px-4">
       {/* Page Header */}

@@ -75,6 +75,17 @@ export const EVENT_DASHBOARD_QUERY = gql`
   }
 `;
 
+export const EVENTS_QUERY = gql`
+  query EventDashboardQuery {
+    GetEvents {
+      created
+      description
+      event_type
+      title
+    }
+  }
+`;
+
 export const CONTENT_DASHBOARD_QUERY = gql`
   query ContentDashboardQuery {
     GetContent {

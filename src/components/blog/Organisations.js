@@ -48,7 +48,6 @@ function Organisations({ title, organisations }) {
     data = parseDiscussionData(
       data.sort((a, b) => b.User.length - a.User.length)
     );
-    console.log(data);
     setDiscussionData(data);
   }, [organisations]);
 

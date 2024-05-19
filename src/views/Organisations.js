@@ -15,7 +15,7 @@ function Organisations() {
     if (organisationData?.GetOrganisations) {
       setOrganisationTableData(
         organisationData?.GetOrganisations.map((organisation, idx) => ({
-          "#": idx,
+          "#": idx + 1,
           Name: organisation.name,
           Industry: organisation.industry,
           Description: organisation.description,

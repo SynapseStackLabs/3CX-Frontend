@@ -15,7 +15,7 @@ function Users() {
     if (userData?.GetUsers) {
       setUserTableData(
         userData?.GetUsers.map((user, idx) => ({
-          "#": idx,
+          "#": idx + 1,
           Name: `${user.first_name} ${user.last_name}`,
           Gender: user.gender,
           Email: user.email,

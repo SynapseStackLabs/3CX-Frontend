@@ -154,12 +154,11 @@ UsersOverview.propTypes = {
   /**
    * The chart dataset.
    */
-  chartData: PropTypes.object,
+  chartData: PropTypes.array,
   /**
    * The Chart.js options.
    */
   chartOptions: PropTypes.object,
-  userData: PropTypes.array,
 };
 
 const defaultChartData = {

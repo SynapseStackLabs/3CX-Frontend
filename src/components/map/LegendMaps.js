@@ -137,7 +137,6 @@ const LegendMaps = ({ legend, events }) => {
 
   useEffect(() => {
     mapInstance.current.refresh();
-    console.log("refresh", process.env.PUBLIC_URL);
   }, [eventsMarker]);
 
   return (
