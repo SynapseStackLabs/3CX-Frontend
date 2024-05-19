@@ -245,12 +245,14 @@ function BlogOverview() {
 
   useEffect(() => {
     setRecommendors(setRecommendorData());
-    setCountryUsers(setCountryUsersData);
   }, [userData]);
 
   useEffect(() => {
-    setEvents(setEventsData);
-  }, [eventData]);
+    if(userData?.GetUsers && eventData?.GetEvents) {
+      setEvents(setEventsData);
+      setCountryUsers(setCountryUsersData);
+    }
+  }, [eventData, userData]);
 
   return (
     <>
@@ -288,7 +290,9 @@ function BlogOverview() {
           <Col lg="12" md="12" sm="12" className="mb-4">
             <Card small className="h-100">
               <CardBody className="pt-0">
-                <LegendMaps legend={countryUsers} events={events} />
+                {userData?.GetUsers && eventData.GetEvents && (
+                  <LegendMaps legend={countryUsers} events={events} />
+                )}
               </CardBody>
             </Card>
           </Col>

@@ -59,66 +59,6 @@ const LegendMaps = ({ legend, events }) => {
     ],
   };
 
-  const legendChange = (args) => {
-    mapInstance.current.legendSettings.mode = legendElement.current.value;
-    if (legendElement.current.value === "Interactive") {
-      if (
-        mapInstance.current.legendSettings.orientation === "Horizontal" ||
-        mapInstance.current.legendSettings.orientation === "None"
-      ) {
-        mapInstance.current.legendSettings.height = "10";
-        mapInstance.current.legendSettings.width = "";
-      } else {
-        mapInstance.current.legendSettings.height = "70%";
-        mapInstance.current.legendSettings.width = "10";
-      }
-    } else {
-      mapInstance.current.legendSettings.height = "";
-      mapInstance.current.legendSettings.width = "";
-    }
-    mapInstance.current.refresh();
-  };
-  const legendPositionChange = (args) => {
-    mapInstance.current.legendSettings.position =
-      legendPositionElement.current.value;
-    if (
-      legendPositionElement.current.value === "Left" ||
-      legendPositionElement.current.value === "Right"
-    ) {
-      mapInstance.current.legendSettings.orientation = "Vertical";
-      if (mapInstance.current.legendSettings.mode === "Interactive") {
-        mapInstance.current.legendSettings.height = "70%";
-        mapInstance.current.legendSettings.width = "10";
-      } else {
-        mapInstance.current.legendSettings.height = "";
-        mapInstance.current.legendSettings.width = "";
-      }
-    } else {
-      mapInstance.current.legendSettings.orientation = "Horizontal";
-      if (mapInstance.current.legendSettings.mode === "Interactive") {
-        mapInstance.current.legendSettings.height = "10";
-        mapInstance.current.legendSettings.width = "";
-      }
-    }
-    mapInstance.current.refresh();
-  };
-  const dataChange = (args) => {
-    if (args.checked) {
-      mapInstance.current.layers[0].shapeSettings.colorMapping[5].color =
-        "lightgrey";
-      mapInstance.current.layers[0].shapeSettings.colorMapping[5].label =
-        "No Data";
-    } else {
-      mapInstance.current.layers[0].shapeSettings.colorMapping[5].color = null;
-      mapInstance.current.layers[0].shapeSettings.colorMapping[5].label = null;
-    }
-    mapInstance.current.refresh();
-  };
-  const toggleLegendChange = (args) => {
-    mapInstance.current.legendSettings.toggleLegendSettings.enable =
-      args.checked;
-    mapInstance.current.refresh();
-  };
   const onMapsLoad = () => {
     let maps = document.getElementById("maps");
     maps.setAttribute("title", "");
@@ -131,6 +71,16 @@ const LegendMaps = ({ legend, events }) => {
     }
   };
 
+  const testData = [
+    {
+      latitude: 40.5871782,
+      location: "Fort Collins, CO",
+      longitude: -105.0770113,
+      no: 1,
+      title: "2024 Cannabis Research Conference",
+    },
+  ];
+
   useEffect(() => {
     setEventsMarker(events);
   }, [events]);
@@ -139,6 +89,7 @@ const LegendMaps = ({ legend, events }) => {
     mapInstance.current.refresh();
   }, [eventsMarker]);
 
+  console.log("load", legend, events);
   return (
     <div className="control-pane">
       <style>{SAMPLE_CSS}</style>
@@ -195,7 +146,7 @@ const LegendMaps = ({ legend, events }) => {
               <MarkersDirective>
                 <MarkerDirective
                   visible={true}
-                  dataSource={eventsMarker}
+                  dataSource={events}
                   shape="Circle"
                   fill="white"
                   width={10}

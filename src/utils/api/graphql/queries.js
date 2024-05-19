@@ -9,6 +9,7 @@ export const USER_DASHBOARD_QUERY = gql`
         id
       }
       created
+      country
     }
   }
 `;
@@ -27,7 +28,6 @@ export const USERS_QUERY = gql`
         id
       }
       created
-      country
     }
   }
 `;
