@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Container, Row, Col } from "shards-react";
+import { Container, Row, Col, Card, CardBody } from "shards-react";
 
 import PageTitle from "../components/common/PageTitle";
 import SmallStats from "../components/common/SmallStats";
@@ -16,6 +16,8 @@ import {
   EVENT_DASHBOARD_QUERY,
   CONTENT_DASHBOARD_QUERY,
 } from "../utils/api/graphql/queries";
+import LegendMaps from "../components/map/LegendMaps";
+import getCountries from "../data/country";
 
 const defaultStats = [
   {
@@ -113,6 +115,11 @@ const defaultStats = [
   },
 ];
 
+const countryCodes = getCountries().reduce((obj, item) => {
+  obj[item.name] = item.code;
+  return obj;
+}, {});
+
 function ParseUserData(title, value, defaultIdx) {
   const stat = defaultStats[defaultIdx];
   stat["value"] = value;
@@ -154,6 +161,8 @@ function BlogOverview() {
   );
 
   const [smallStats, setStats] = useState([]);
+  const [countryUsers, setCountryUsers] = useState([]);
+  const [events, setEvents] = useState([]);
 
   const setStatData = () => {
     let stats = [];
@@ -178,9 +187,61 @@ function BlogOverview() {
     return stats;
   };
 
+  const setCountryUsersData = () => {
+    let data = [];
+    if (userData?.GetUsers) {
+      data = userData?.GetUsers.reduce((obj, item) => {
+        const countData = obj.find(
+          (val) => val.code == countryCodes[item.country]
+        );
+        if (countData) {
+          countData.value++;
+          countData.density++;
+          countData.population++;
+        } else {
+          obj.push({
+            code: countryCodes[item.country],
+            value: 1,
+            name: item.country,
+            population: 1,
+            density: 1,
+          });
+        }
+        return obj;
+      }, []);
+      console.log("users", data);
+    }
+    return data;
+  };
+
+  const setEventsData = () => {
+    if (eventData?.GetEvents) {
+      let index = 1;
+      const data = eventData?.GetEvents.map((event) => {
+        return {
+          latitude: event.lat,
+          longitude: event.lon,
+          location: event.location,
+          title: event.title,
+          no: index++,
+        };
+      });
+      return data.filter((e) => e.latitude && e.longitude);
+    }
+    return [];
+  };
+
   useEffect(() => {
     setStats(setStatData);
   }, [userData, organisationData, contentData, eventData]);
+
+  useEffect(() => {
+    setCountryUsers(setCountryUsersData);
+  }, [userData]);
+
+  useEffect(() => {
+    setEvents(setEventsData);
+  }, [eventData]);
 
   return (
     <>
@@ -215,9 +276,18 @@ function BlogOverview() {
         </Row>
 
         <Row>
+          <Col lg="12" md="12" sm="12" className="mb-4">
+            <Card small className="h-100">
+              <CardBody className="pt-0">
+                <LegendMaps legend={countryUsers} events={events} />
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
           {/* Users Overview */}
           <Col lg="8" md="12" sm="12" className="mb-4">
-            <UsersOverview userData={userData?.GetUsers}/>
+            <UsersOverview userData={userData?.GetUsers} />
           </Col>
 
           {/* Users by Device */}
@@ -235,6 +305,7 @@ function BlogOverview() {
             <TopReferrals />
           </Col>
         </Row>
+
       </Container>
     </>
   );

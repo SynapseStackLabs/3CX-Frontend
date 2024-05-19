@@ -6,6 +6,7 @@ export const USER_DASHBOARD_QUERY = gql`
       first_name
       last_name
       created
+      country
     }
   }
 `;
@@ -23,6 +24,8 @@ export const EVENT_DASHBOARD_QUERY = gql`
   query EventDashboardQuery {
     GetEvents {
       id
+      title
+      location
       lat
       lon
     }
